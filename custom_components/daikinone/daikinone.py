@@ -409,7 +409,7 @@ class DaikinOne:
             name = "Furnace"
             if model == "DTA119A71":
                 name = "Non Communicating Gas Furnace"
-                status = "Heat" if payload.data["ctIFCHeatRequestedDemandPercent"] > 0 else "Off"
+                status = "Heat" if payload.data["ctIFCCurrentHeatActualStatus"] > 0 else "Off"
                 equipment[eid] = DaikinIndoorUnit(
                     id=eid,
                     thermostat_id=payload.id,
