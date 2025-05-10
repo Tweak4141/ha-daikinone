@@ -410,6 +410,9 @@ class DaikinOne:
             if model == "DTA119A71":
                 name = "Non Communicating Gas Furnace"
                 status = "Heat" if payload.data["ctIFCCurrentHeatActualStatus"] > 0 else "Off"
+                humidificationDemand = 0
+                if status == "Heat":
+                    humidificationDemand = (payload.data["ctIFCHumRequestedDemandPercent"] / 2
                 equipment[eid] = DaikinIndoorUnit(
                     id=eid,
                     thermostat_id=payload.id,
@@ -425,7 +428,7 @@ class DaikinOne:
                     heat_demand_current_percent=round(payload.data["ctIFCCurrentHeatActualStatus"] / 2),
                     cool_demand_requested_percent=round(payload.data["ctIFCCoolRequestedDemandPercent"] / 2),
                     cool_demand_current_percent=round(payload.data["ctIFCCurrentCoolActualStatus"] / 2),
-                    humidification_demand_requested_percent=round(payload.data["ctIFCHumRequestedDemandPercent"] / 2),
+                    humidification_demand_requested_percent=humidificationDemand,
                     dehumidification_demand_requested_percent=round(payload.data["ctIFCDehumRequestedDemandPercent"] / 2),
                     power_usage=payload.data["ctIndoorPower"] / 10,
                 )
