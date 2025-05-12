@@ -409,10 +409,10 @@ class DaikinOne:
             name = "Furnace"
             if model == "DTA119A71":
                 name = "Non Communicating Gas Furnace"
-                status = "Heat" if payload.data["ctIFCCurrentHeatActualStatus"] > 0 else "Off"
+                status = "Heat" if payload.data["ctIFCCurrentHeatActualStatus"] > 0 else "Stop"
                 humidificationDemand = 0
                 if status == "Heat":
-                    humidificationDemand = (payload.data["ctIFCHumRequestedDemandPercent"] / 2
+                    humidificationDemand = round(payload.data["ctIFCHumRequestedDemandPercent"] / 2)
                 equipment[eid] = DaikinIndoorUnit(
                     id=eid,
                     thermostat_id=payload.id,
